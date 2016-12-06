@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+<title>Cross-Browser QRCode generator for Javascript</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="qrcode.js"></script>
+</head>
+<body>
+<!-- <input id="text" type="text" value="http://jindo.dev.naver.com/collie" style="width:80%" /><br /> -->
+<input id="fn" type="text" value="fn" style="width:80%" /><br />
+<input id="ln" type="text" value="ln" style="width:80%" /><br />
+<input id="name" type="text" value="name" style="width:80%" /><br />
+<button id="test">Generate QR Code</button>
+
+<div id="qrcode" style="width:200px; height:200px; margin-top:15px;"></div>
+
+<script type="text/javascript">
+var qrcode = new QRCode(document.getElementById("qrcode"), {
+	width : 200,
+	height : 200
+});
+
+function makeCode () {		
+	var button = document.getElementById('test');
+	var fn = document.getElementById("fn")
+	var ln = document.getElementById("ln")
+	var name = document.getElementById("name")
+	
+	button.onclick = function () {
+		var elText = fn.value + "," + ln.value + "," + name.value;
+// 	    alert(elText);
+	
+// 	var elText = document.getElementById("text");
+	
+	if (!elText) {
+		alert("Input a text");
+		elText.focus();
+		return;
+	}
+	
+	qrcode.makeCode(elText);
+	}
+}
+
+makeCode();
+
+$("#text").
+	on("blur", function () {
+		makeCode();
+	}).
+	on("keydown", function (e) {
+		if (e.keyCode == 13) {
+			makeCode();
+		}
+	});
+</script>
+</body>
